@@ -1,6 +1,11 @@
+//Import required packages
 var inquirer = require('inquirer');
 const fs = require('fs');
+
+// Declare variables
 var readmeAnswers
+
+//Define the questions to ask the user
 const questions = [{
     type: 'input',
     name: 'Title',
@@ -35,19 +40,21 @@ const questions = [{
     },
 ]
 
-
+// Define the function to create the Markdown file
 function createMarkdown(questions) {
     var md = ''
     Object.keys(questions).forEach((key) => {
-      md += '## ' + key + '\n'
-      md += '> ' + questions[key] + '\n'
+      md += '## ' + key + '\n'//add header to each question
+      md += '> ' + questions[key] + '\n'// add answer to each question
     })
 
+
+    // Call the writToFile() function with Markdown string
 writeToFile(md)
 
 
 }
-
+// Prompt the user with the questions defined above
     inquirer.prompt(questions).then((answers) => {
         console.log('\nOrder receipt:');
         console.log(JSON.stringify(answers, null, '  '));
@@ -56,7 +63,7 @@ writeToFile(md)
       });
       function writeToFile( data) {
 
-
+// Define the function to write the Markdown string to a file 
 fs.writeFile("README.md", data, function(err) {
     if(err) {
         return console.log(err);
